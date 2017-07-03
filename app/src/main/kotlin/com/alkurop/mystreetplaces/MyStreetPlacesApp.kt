@@ -7,6 +7,7 @@ import com.alkurop.mystreetplaces.di.modules.ApplicationModule
 import com.facebook.stetho.Stetho
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
+import timber.log.Timber
 
 
 class MyStreetPlacesApp : Application() {
@@ -17,6 +18,7 @@ class MyStreetPlacesApp : Application() {
     component = buildApplicationComponent()
     initRealm()
     initStetho()
+    Timber.plant(Timber.DebugTree())
 
   }
 

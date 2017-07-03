@@ -1,5 +1,6 @@
 package com.alkurop.mystreetplaces.di.modules
 
+import com.alkurop.mystreetplaces.repo.LoginRepo
 import com.alkurop.mystreetplaces.ui.home.MainActivityPresenter
 import com.alkurop.mystreetplaces.ui.home.MainActivityPresenterImpl
 import com.alkurop.mystreetplaces.ui.login.LoginPresenter
@@ -14,8 +15,8 @@ class PresenterModule {
     return LoginPresenterImpl()
   }
 
-  @Provides fun provideMainPresenter(): MainActivityPresenter {
-    return MainActivityPresenterImpl()
+  @Provides fun provideMainPresenter(loginRepo: LoginRepo): MainActivityPresenter {
+    return MainActivityPresenterImpl(loginRepo)
   }
 
 }

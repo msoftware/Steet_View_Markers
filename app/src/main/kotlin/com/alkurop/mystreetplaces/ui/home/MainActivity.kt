@@ -20,8 +20,8 @@ class MainActivity : BaseMvpActivity<MainModel>() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component().inject(this)
-    setContentView(R.layout.activity_main)
-    login.setOnClickListener { presenter.onLoginButton() }
+    setupRootView(R.layout.activity_main)
+    presenter.start()
   }
 
   override fun renderView(viewModel: MainModel) {

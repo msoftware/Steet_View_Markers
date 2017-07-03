@@ -7,4 +7,6 @@ interface SocialCallback {
   fun onSuccess(result: LoginSuccess)
 
   fun onError(exception: Exception)
+
+  fun onLogOut()
 }

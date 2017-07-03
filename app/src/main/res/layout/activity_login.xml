@@ -6,5 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alkurop.mystreetplaces.ui.login.LoginActivity">
+  <com.facebook.login.widget.LoginButton
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:id="@+id/loginFacebookButton"
+      android:layout_width="220dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      android:fontFamily="sans-serif-light"
+      android:gravity="end"
+      android:paddingBottom="12dp"
+      android:paddingTop="12dp"
+      android:textAllCaps="true"
+      android:textSize="14sp"
+      app:com_facebook_login_text="Login with facebook"/>
 
 </RelativeLayout>

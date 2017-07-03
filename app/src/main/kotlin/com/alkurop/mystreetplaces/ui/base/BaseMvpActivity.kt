@@ -51,7 +51,10 @@ abstract class BaseMvpActivity<T> : BaseActivity() {
         .subscribe({ renderView(it) }, { Timber.e(it) })
     val sub2 = getNavigation()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({ navigate(it) }, { Timber.e(it) })
+        .subscribe({
+          navigate(it)
+        }, {
+          Timber.e(it) })
     subscriptions.add(sub)
     subscriptions.add(sub2)
   }

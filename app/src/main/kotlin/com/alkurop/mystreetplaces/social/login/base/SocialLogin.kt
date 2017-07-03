@@ -12,4 +12,5 @@ interface SocialLogin {
   fun onActivityResult(request: Int, response: Int, data: Intent?)
 
   fun setUp(activity: Activity, callback: SocialCallback)
+  fun destroy()
 }

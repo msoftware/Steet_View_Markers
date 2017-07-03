@@ -2,25 +2,22 @@ package com.alkurop.mystreetplaces.social.login.facebook
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import com.alkurop.mystreetplaces.social.login.LoginSuccess
 import com.alkurop.mystreetplaces.social.login.base.SocialCallback
 import com.alkurop.mystreetplaces.social.login.base.SocialLogin
+import com.facebook.AccessToken
+import com.facebook.AccessTokenTracker
 import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
 import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
 import java.util.*
 
 class FacebookLogin : SocialLogin {
 
   val mFbCallbackManager: CallbackManager = CallbackManager.Factory.create()
-
   lateinit var mActivity: Activity
-
   lateinit var mCallback: SocialCallback
 
+  var att: AccessTokenTracker? = null
 
   override fun setUp(activity: Activity, callback: SocialCallback) {
     this.mActivity = activity
@@ -28,22 +25,24 @@ class FacebookLogin : SocialLogin {
     registerCallback()
   }
 
+
+  override fun destroy() {
+    att?.stopTracking()
+  }
+
   private fun registerCallback() {
-    LoginManager.getInstance().registerCallback(mFbCallbackManager, object : FacebookCallback<LoginResult> {
-      override fun onSuccess(loginResult: LoginResult) {
-        mCallback.onSuccess(LoginSuccess(loginResult.accessToken.userId,
-            loginResult.accessToken.token))
-
+    att = object : AccessTokenTracker() {
+      override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?, currentAccessToken: AccessToken?) {
+        if (currentAccessToken == null || currentAccessToken.isExpired || currentAccessToken.token == null) {
+          mCallback.onLogOut()
+        } else {
+          mCallback.onSuccess(LoginSuccess(currentAccessToken.userId,
+              currentAccessToken.token))
+        }
       }
+    }
+    att?.startTracking()
 
-      override fun onCancel() {
-        Log.d(TAG, "user canceled login")
-      }
-
-      override fun onError(exception: FacebookException) {
-        mCallback.onError(exception)
-      }
-    })
   }
 
   override fun signOut() {
@@ -59,9 +58,5 @@ class FacebookLogin : SocialLogin {
 
   override fun onActivityResult(request: Int, response: Int, data: Intent?) {
     mFbCallbackManager.onActivityResult(request, response, data)
-  }
-
-  companion object {
-    val TAG = FacebookLogin::class.java.simpleName
   }
 }

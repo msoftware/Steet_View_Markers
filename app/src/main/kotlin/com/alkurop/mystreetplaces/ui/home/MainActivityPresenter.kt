@@ -9,5 +9,5 @@ interface MainActivityPresenter {
 
   fun unsubscribe()
 
-  fun onLoginButton()
+  fun start()
 }

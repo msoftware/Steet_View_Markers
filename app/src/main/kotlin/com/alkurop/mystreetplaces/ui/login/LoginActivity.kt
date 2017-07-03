@@ -8,16 +8,20 @@ import com.alkurop.mystreetplaces.di.annotations.Facebook
 import com.alkurop.mystreetplaces.social.login.LoginSuccess
 import com.alkurop.mystreetplaces.social.login.base.SocialCallback
 import com.alkurop.mystreetplaces.social.login.base.SocialLogin
+import com.alkurop.mystreetplaces.social.login.facebook.FacebookConstants
 import com.alkurop.mystreetplaces.ui.base.BaseMvpActivity
 import com.alkurop.mystreetplaces.ui.navigation.NavigationAction
+import com.facebook.login.LoginBehavior
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
+import java.util.ArrayList
 import javax.inject.Inject
 
 class LoginActivity : BaseMvpActivity<LoginModel>() {
 
   @Inject lateinit var presenter: LoginPresenter
   @field:[Facebook] @Inject lateinit var facebookLogin: SocialLogin
-
 
   override fun getSubject(): Observable<LoginModel> = presenter.viewBus
 
@@ -26,8 +30,18 @@ class LoginActivity : BaseMvpActivity<LoginModel>() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component().inject(this)
-    setContentView(R.layout.activity_login)
+    setupRootView(R.layout.activity_login)
     facebookLogin.setUp(this, presenter)
+    initFacebookButton()
+  }
+
+  private fun initFacebookButton() {
+    val permissions = ArrayList<String>()
+    permissions.add(FacebookConstants.public_profile)
+    permissions.add(FacebookConstants.email)
+    permissions.add(FacebookConstants.user_friends)
+    loginFacebookButton.setReadPermissions(permissions)
+    loginFacebookButton.loginBehavior = LoginBehavior.WEB_ONLY
   }
 
   override fun renderView(viewModel: LoginModel) {
@@ -40,6 +54,9 @@ class LoginActivity : BaseMvpActivity<LoginModel>() {
 
 
   override fun unsubscribe() {
+    facebookLogin.destroy()
     presenter.unsubscrube()
   }
+
+
 }

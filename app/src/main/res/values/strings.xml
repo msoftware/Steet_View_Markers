@@ -2,5 +2,5 @@
   <string name="app_name">MyStreetPlaces</string>
   <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">AIzaSyD-VPyj7IwXBWFcSKEW0HgTgNJMDK1sMvM</string>
   <string name="facebook_app_id" translatable="false" templateMergeStrategy="preserve">119678788643146</string>
-
+  <string name="fb_login_protocol_scheme">fb119678788643146</string>
 </resources>
