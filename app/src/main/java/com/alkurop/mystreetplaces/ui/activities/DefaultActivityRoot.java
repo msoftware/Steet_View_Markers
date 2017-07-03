@@ -7,7 +7,7 @@ import com.alkurop.mystreetplaces.di.annotations.PerActivity;
 import javax.inject.Inject;
 
 /** Basic pure implementation of ActivityRoot. */
-final class DefaultActivityRoot implements ActivityRoot {
+public final class DefaultActivityRoot implements ActivityRoot {
 
   private final Activity activity;
 
